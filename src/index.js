@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { CategoryProvider, ProdProvider } from './provider/ProdData';
+import { CategoryProvider, CurrentCategoryProvider, ProdProvider } from './provider/ProdData';
 import { Header } from './components/Header';
 import { Navbar } from './components/Navbar';
 import { ActiveProvider } from './provider/IsActicve';
@@ -14,11 +14,13 @@ root.render(
     <BrowserRouter>
         <ActiveProvider>
             <CategoryProvider>
+            <CurrentCategoryProvider>
             <ProdProvider>
                 <Header/>
                     <App />
                 <Navbar/>
             </ProdProvider>
+            </CurrentCategoryProvider>
             </CategoryProvider>
         </ActiveProvider>
     </BrowserRouter>

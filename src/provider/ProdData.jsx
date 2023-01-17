@@ -17,7 +17,6 @@ export const CategoryProvider = (props) => {
             console.log(err.message);
         }
     },[category])
-        
     const {children} = props;
     return(
         <CategoryContext.Provider value={{category,setCategory}}>
@@ -27,18 +26,33 @@ export const CategoryProvider = (props) => {
 }
 export const useCategoryContext = () => useContext(CategoryContext);
 
+const CurrentCategoryContext = createContext();
+
+export const CurrentCategoryProvider = (props) => {
+    const [currentCategory,setCurrentCategory]=useState({})
+        
+    const {children} = props;
+    return(
+        <CurrentCategoryContext.Provider value={{currentCategory,setCurrentCategory}}>
+            {children}
+        </CurrentCategoryContext.Provider>
+    )
+}
+export const useCurrentCategoryContext = () => useContext(CurrentCategoryContext);
+
 export const ProdProvider = (props) => {
-    const [prodInfo, setProdInfo]=useState([])
-    const {category}=useCategoryContext()
+    const [prodInfo, setProdInfo]=useState({})
+    const {currentCategory}=useCurrentCategoryContext()
     useEffect(()=>{
-       category.map((categor,ind)=>{
-        try{
-            axios.get(`http://43.231.115.191:8085/products?category_id=${categor.id}=IwAR3jblfiYXiI2keHfM0MxUJu_bIgmQ-erYKlpqsig_sFSTMVeBJPk36eNmM`).then(function(response){setProdInfo([...prodInfo,{category:categor.id, data:response.data}])})
-        }catch(err){
-            console.log(err.message);
+        const FetchProd =async()=>{
+            try{
+                await axios.get(`http://43.231.115.191:8085/products?category_id=0aab4f98-0116-4e39-a1dd-809d4c0eede0&fbclid=IwAR0XcZ21kzvsV9sIgVHOOBOqSr8slyVm8eb0YRqYgbpwZSVQAb9NVmJhp_0`).then(function(response){setProdInfo(response.data)})
+            }catch(err){
+                console.log(err);
+            }
         }
-       })
-    },[category])
+        FetchProd()
+    },[currentCategory])
     const {children} = props;
     return(
         <ProdContext.Provider value={{prodInfo, setProdInfo}}>

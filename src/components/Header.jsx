@@ -1,10 +1,11 @@
 import {HiMenu,HiSearch, HiShoppingCart} from "react-icons/hi"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import logo from '../assets/logo.png'
 import { useActiveContext } from "../provider/IsActicve"
 export const Header = ()=>{
     const headerContext=['Өнөөдрийн санал болгох', "Пуужингийн хүргэлт", "Тогтомол хүргэлт", "Купон"]
     const {setIsActive}=useActiveContext()
+    const path =useLocation()
     return(
         <div>
             <div id="upperHeader" className="flex-col">
@@ -19,16 +20,16 @@ export const Header = ()=>{
                     </div>
                     <div className="flex flex-row h-full w-1/4 gap-2">
                         <div onClick={()=>setIsActive(false)} className="w-9 h-9 text-xl border border-gray-300 rounded-md px-1 py-1 flex justify-center items-center"><HiSearch/></div>
-                        <div className="w-9 h-9 text-xl border border-gray-300 rounded-md px-1 py-1 flex justify-center items-center"><HiShoppingCart/></div>
+                        <Link to='/cart'><div className="w-9 h-9 text-xl border border-gray-300 rounded-md px-1 py-1 flex justify-center items-center"><HiShoppingCart/></div></Link>
                     </div>
                 </div>
                 <div className="w-full h-2 border-b border-gray-300"></div>
             </div>
-            <div id="lowerHeader" className="flex overflow-x-scroll pr-3 scrollbar-hidden">
-                {headerContext.map((text,id) =>{
-                    return (<span key={id} className="text-xs text-center w-fit">{text}</span>)
-                })}
-            </div>
+            {path.pathname === '/' && <div id="lowerHeader" className="flex overflow-x-scroll pr-3 scrollbar-hidden">
+            {headerContext.map((text,id) =>{
+                return (<span key={id} className="text-xs text-center w-fit">{text}</span>)
+            })}
+        </div>}
         </div>
     )
 }

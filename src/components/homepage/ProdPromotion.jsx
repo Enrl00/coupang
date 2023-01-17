@@ -71,7 +71,7 @@ export const ProdPromotion = ()=>{
             <div>
             <div className='w-full h-12 bg-blue-300 flex justify-center items-center text-white font-bold text-xl'>Best of Today</div>
                 {products.map((product,ind)=>{
-                return <Link to={`/product/${ind}`}><ProdBox product={product}/></Link>
+                return <Link key={ind} to={`/product/${ind}`}><ProdBox product={product}/></Link>
                 })}
             </div>
         </div>
