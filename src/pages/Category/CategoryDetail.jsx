@@ -33,7 +33,7 @@ export const CategoryDetail =()=>{
             <div className="flex w-full  border-gray-300 flex-wrap mb-2">
                 {currentCategory?.sub_categories?.map((subC,ind)=>{
                     return(
-                        <div className="flex justify-between w-1/3 border-r border-gray-300 py-2 pl-2 items-center border text-xs" key={ind}>{subC.name} <HiChevronRight/></div>
+                        <Link to={`/${subC.id}`} className='w-1/3'><div className="flex justify-between w-full border-r border-gray-300 py-2 pl-2 items-center border text-xs" key={ind}>{subC.name} <HiChevronRight/></div></Link>
                     )
                 })}
             </div>
