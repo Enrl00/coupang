@@ -5,24 +5,25 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { CategoryProvider, CurrentCategoryProvider, ProdProvider } from './provider/ProdData';
-import { Header } from './components/Header';
-import { Navbar } from './components/Navbar';
-import { ActiveProvider } from './provider/IsActicve';
+import { ActiveProvider, LoadingProvider } from './provider/IsActicve';
+import Layout from './pages/Layout';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
+        <LoadingProvider>
         <ActiveProvider>
             <CategoryProvider>
             <CurrentCategoryProvider>
             <ProdProvider>
-                <Header/>
+                <Layout>
                     <App />
-                <Navbar/>
+                </Layout>
             </ProdProvider>
             </CurrentCategoryProvider>
             </CategoryProvider>
         </ActiveProvider>
+        </LoadingProvider>
     </BrowserRouter>
 );
 

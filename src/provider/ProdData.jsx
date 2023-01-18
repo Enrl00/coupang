@@ -1,5 +1,6 @@
 import {createContext,useContext, useEffect, useState} from 'react';
 import axios from 'axios';
+import { useLoadingContext } from './IsActicve';
 
 const ProdContext = createContext();
 
@@ -10,13 +11,22 @@ const CategoryContext = createContext();
 
 export const CategoryProvider = (props) => {
     const [category,setCategory]=useState([])
+    const {setIsLoading}=useLoadingContext()
     useEffect(()=>{
         try{
-            axios.get('http://43.231.115.191:8085/categories?source_id=1bcc6886-c599-4697-9965-1b3155408b6b').then(function(response){setCategory(response.data)})
+            setIsLoading(true)
+            axios.get('http://43.231.115.191:8085/categories?source_id=1bcc6886-c599-4697-9965-1b3155408b6b').then(function(response){
+                // axios.post('http://43.231.113.22/translate',{response}).then(function(response){
+                //     setCategory(response.data) 
+                //     setIsLoading(false)
+                // })
+                setCategory(response.data) 
+                setIsLoading(false)
+            })
         }catch(err){
             console.log(err.message);
         }
-    },[category])
+    },[])
     const {children} = props;
     return(
         <CategoryContext.Provider value={{category,setCategory}}>
@@ -46,7 +56,9 @@ export const ProdProvider = (props) => {
     useEffect(()=>{
         const FetchProd =async()=>{
             try{
-                await axios.get(`http://43.231.115.191:8085/products?category_id=0aab4f98-0116-4e39-a1dd-809d4c0eede0&fbclid=IwAR0XcZ21kzvsV9sIgVHOOBOqSr8slyVm8eb0YRqYgbpwZSVQAb9NVmJhp_0`).then(function(response){setProdInfo(response.data)})
+                await axios.get(`http://43.231.115.191:8085/products?category_id=0aab4f98-0116-4e39-a1dd-809d4c0eede0&fbclid=IwAR0XcZ21kzvsV9sIgVHOOBOqSr8slyVm8eb0YRqYgbpwZSVQAb9NVmJhp_0`).then(function(response){
+                    setProdInfo(response.data)
+                })
             }catch(err){
                 console.log(err);
             }

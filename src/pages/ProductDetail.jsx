@@ -15,10 +15,10 @@ export const ProductDetail =()=>{
         if(product.id === prodId) setCurrentView(product) 
         return product;
       })
-    },[])
+    },[prodId])
 return(
-    <div className="flex-col w-screen-sm px-4 gap-3">
-        <div id="mainProd">
+    <div className="flex-col w-screen-sm gap-3">
+        <div id="mainProd" className='mx-4 '>
           <div id="pictures"><Slider images={currentView?.img_links}/></div>
           <div id="prodDetails" className="flex flex-col gap-2 py-3">
             <div className="text-lg font-medium">{currentView?.name}</div>
